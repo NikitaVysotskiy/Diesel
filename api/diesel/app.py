@@ -1,6 +1,6 @@
 from flask import Flask
 
-from api.diesel.extensions import db
+from api.diesel.extensions import db, bcrypt
 
 
 def create_app(config_object):
@@ -13,4 +13,5 @@ def create_app(config_object):
 
 def register_extensions(app):
     """Register Flask extensions."""
+    bcrypt.init_app(app)
     db.init_app(app)

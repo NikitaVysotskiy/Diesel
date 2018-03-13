@@ -1,3 +1,4 @@
+from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy, Model
 
 
@@ -29,4 +30,5 @@ class CRUDMixin(Model):
         return commit and db.session.commit()
 
 
+bcrypt = Bcrypt()
 db = SQLAlchemy(model_class=CRUDMixin)
