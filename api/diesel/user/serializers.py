@@ -8,17 +8,17 @@ class UserSchema(Schema):
     password = fields.Str(load_only=True)
     token = fields.Str(dump_only=True)
 
-    # user = fields.Nested('self', exclude=('user',), default=True, load_only=True)
+    # TODO: remove
+    user = fields.Nested('self', exclude=('user',), default=True, load_only=True)
 
-    # @pre_load
-    # def make_user(self, data):
-    #     print(data)
-    #     data = data['user']
-    #     return data
+    @pre_load
+    def make_user(self, data):
+        data = data['user']
+        return data
 
-    # @post_dump
-    # def dump_user(self, data):
-    #     return {'user': data}
+    @post_dump
+    def dump_user(self, data):
+        return {'user': data}
 
     class Meta:
         strict = True

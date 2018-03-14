@@ -1,4 +1,4 @@
-from flask import Blueprint, request
+from flask import Blueprint
 from flask_apispec import marshal_with, use_kwargs
 from sqlalchemy.exc import IntegrityError
 
@@ -13,7 +13,6 @@ blueprint = Blueprint('user', __name__)
 @use_kwargs(user_schema)
 @marshal_with(user_schema)
 def register_user(username, password, email, **kwargs):
-    print(username)
     try:
         user = User(username, email, password=password, **kwargs).save()
     except IntegrityError:
