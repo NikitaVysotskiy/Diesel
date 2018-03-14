@@ -4,7 +4,7 @@ from flask import flash, _request_ctx_stack
 from flask_jwt import _jwt
 from functools import wraps
 
-from api.diesel.user.models import User
+from diesel.user.models import User
 
 
 def jwt_optional(realm=None):

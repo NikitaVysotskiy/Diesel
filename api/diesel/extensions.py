@@ -1,4 +1,8 @@
 from flask_bcrypt import Bcrypt
+from flask_caching import Cache
+from flask_cors import CORS
+from flask_jwt import JWT
+from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy, Model
 
 
@@ -31,4 +35,10 @@ class CRUDMixin(Model):
 
 
 bcrypt = Bcrypt()
+cache = Cache()
+cors = CORS()
 db = SQLAlchemy(model_class=CRUDMixin)
+migrate = Migrate()
+
+from diesel.utils import authenticate, jwt_identity
+jwt = JWT(authentication_handler=authenticate, identity_handler=jwt_identity)

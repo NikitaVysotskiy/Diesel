@@ -1,7 +1,7 @@
 from flask_jwt import _default_jwt_encode_handler
 from sqlalchemy import Column
 
-from api.diesel.extensions import db, bcrypt
+from diesel.extensions import db, bcrypt
 
 
 class User(db.Model):
