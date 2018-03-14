@@ -12,8 +12,8 @@ class User(db.Model):
     email = Column(db.String(100), unique=True, nullable=False)
     password = Column(db.Binary(128), nullable=True)
 
-    def __init__(self, username, email, password=None):
-        db.Model.__init__(self, username=username, email=email)
+    def __init__(self, username, email, password=None, **kwargs):
+        db.Model.__init__(self, username=username, email=email, **kwargs)
         if password:
             self.set_password(password)
         else:

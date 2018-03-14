@@ -4,5 +4,3 @@ from diesel.settings import DevConfig
 CONFIG = DevConfig
 
 app = create_app(CONFIG)
-
-print('ASD')

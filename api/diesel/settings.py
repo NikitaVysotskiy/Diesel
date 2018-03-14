@@ -26,5 +26,5 @@ class DevConfig(Config):
     JWT_EXPIRATION_DELTA = timedelta(10 ** 6)
     SQLALCHEMY_DATABASE_URI = os.environ.get(
         'DATABASE_URL',
-        'postgresql://localhost/diesel'
+        'postgresql://postgres:postgres@localhost/diesel'
     )

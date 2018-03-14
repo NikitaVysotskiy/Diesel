@@ -5,7 +5,6 @@ from diesel.extensions import bcrypt, cache, db, migrate, jwt, cors
 
 
 def create_app(config_object):
-    print('HERE')
     app = Flask(__name__.split('.')[0])
     app.url_map.strict_slashes = False
     app.config.from_object(config_object)
