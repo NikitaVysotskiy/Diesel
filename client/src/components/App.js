@@ -7,16 +7,16 @@ class App extends Component {
     constructor(props) {
         super(props);
 
-        this.submitForm = ev => {
-            ev.preventDefault();
-
-            this.closeModal();
-        };
-
-
         this.state = { modalOpen: true };
         this.showModal.bind(this);
         this.closeModal.bind(this);
+    }
+
+    componentWillMount() {
+        const token = window.localStorage.getItem('jwt');
+        if (!token) {
+            this.showModal()
+        }
     }
 
     showModal = () => this.setState({ modalOpen: true });
@@ -30,7 +30,6 @@ class App extends Component {
                 <LoginModal
                     open={modalOpen}
                     onClose={this.closeModal}
-                    submitForm={this.submitForm}
                 />
             </div>
         );

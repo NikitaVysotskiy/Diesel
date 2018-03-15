@@ -1,7 +1,7 @@
 import superagentPromise from 'superagent-promise';
 import _superagent from 'superagent';
 
-import { API_ROOT } from 'constants/constants'
+import { API_ROOT } from './constants/constants'
 
 const superagent = superagentPromise(_superagent, global.Promise);
 
@@ -27,4 +27,7 @@ const Auth = {
     get: () => requests.get('/user')
 };
 
-
+export default {
+    Auth,
+    setToken: _token => { token = _token; }  // TODO: ???
+}
