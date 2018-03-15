@@ -21,6 +21,7 @@ const LoginForm = props => (
                     icon='user circle'
                     iconPosition='left'
                     placeholder='Email'
+                    value={props.email}
                     onChange={props.changeEmail}
                 />
             </Form.Field>
@@ -30,6 +31,7 @@ const LoginForm = props => (
                     icon='unlock alternate'
                     iconPosition='left'
                     placeholder='Password'
+                    value={props.password}
                     onChange={props.changePassword}
                 />
             </Form.Field>
@@ -59,11 +61,16 @@ class LoginModal extends React.Component {
     }
 
     render() {
+        const email = this.props.email;
+        const password = this.props.password;
+
         return (
             <Modal open={this.props.open} onClose={this.props.onClose} basic size='small'>
                 <Header icon='sign in' content={'Sign In'} />
                 <Modal.Content>
                     <LoginForm
+                        email={email}
+                        password={password}
                         changeEmail={this.changeEmail}
                         changePassword={this.changePassword}
                     />
@@ -80,7 +87,7 @@ class LoginModal extends React.Component {
                     <Button
                         color='green'
                         inverted
-                        onClick={this.submitForm}
+                        onClick={this.submitForm(email, password)}
                     >
                         <Icon name='checkmark' /> Sign In
                     </Button>
