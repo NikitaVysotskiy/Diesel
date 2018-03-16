@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from "react-redux";
 import { Button, Form, Icon, Header, Modal, Segment } from 'semantic-ui-react';
 
-import agent from "../agent";
-import { LOGIN, UPDATE_FIELD_AUTH } from "../constants/actionTypes";
+import agent from "../../agent";
+import { LOGIN, UPDATE_FIELD_AUTH } from "../../constants/actionTypes";
 
 const mapStateToProps = state => ({...state.auth});
 
@@ -30,9 +30,10 @@ const LoginForm = props => (
                     fluid
                     icon='unlock alternate'
                     iconPosition='left'
-                    placeholder='Password'
-                    value={props.password}
                     onChange={props.changePassword}
+                    placeholder='Password'
+                    type='password'
+                    value={props.password}
                 />
             </Form.Field>
         </Form>
@@ -45,7 +46,6 @@ class LoginModal extends React.Component {
         super(props);
 
         const updateFieldEvent = key => ev => {
-            console.log(key, ev.target.value);
             this.props.onUpdateField(key, ev.target.value);
         };
 

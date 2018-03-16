@@ -25,7 +25,7 @@ def jwt_optional(realm=None):
 
 def jwt_identity(payload):
     user_id = payload['identity']
-    return User.get_by_id(user_id)
+    return User.get_by_id(user_id=user_id)
 
 
 def authenticate(email, password):

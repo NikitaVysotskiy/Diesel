@@ -29,5 +29,10 @@ class User(db.Model):
     def token(self):
         return _default_jwt_encode_handler(self).decode('utf-8')
 
+    @classmethod
+    def get_by_id(cls, user_id):
+        return User.query.get(int(user_id))
+
+
     def __repr__(self):
         return 'User({username})'.format(username=self.username)
