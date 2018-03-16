@@ -1,4 +1,4 @@
-import { APP_LOAD } from "../constants/actionTypes";
+import { APP_LOAD, REDIRECT } from "../constants/actionTypes";
 
 const initState = {
     token: null
@@ -12,6 +12,11 @@ export default (state=initState, action) => {
                 appLoaded: true,
                 token: action.token || null,
                 currentUser: action.payload ? action.payload.user : null
+            };
+        case REDIRECT:
+            return {
+                ...state,
+                redirectTo: null
             };
         default:
             return state

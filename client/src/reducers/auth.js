@@ -1,4 +1,4 @@
-import { ASYNC_START, LOGIN, UPDATE_FIELD_AUTH } from "../constants/actionTypes";
+import {ASYNC_START, LOGIN, LOGOUT, UPDATE_FIELD_AUTH} from "../constants/actionTypes";
 
 export default (state={}, action) => {
     switch (action.type) {
@@ -14,6 +14,8 @@ export default (state={}, action) => {
                 inProgress: false,
                 errors: action.error ? action.payload.errors : null
             };
+        case LOGOUT:
+            return {...state, redirectTo: '/login', token: null, currentUser: null};
         case UPDATE_FIELD_AUTH:
             return {...state, [action.key]: action.value };
         default:
