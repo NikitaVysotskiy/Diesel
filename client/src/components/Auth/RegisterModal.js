@@ -23,7 +23,7 @@ const RegisterForm = props => (
                     icon='user circle'
                     iconPosition='left'
                     placeholder='Username'
-                    value={props.username}
+                    value={props.username || ''}
                     onChange={props.changeUsername}
                 />
             </Form.Field>
@@ -33,7 +33,7 @@ const RegisterForm = props => (
                     icon='mail'
                     iconPosition='left'
                     placeholder='Email'
-                    value={props.email}
+                    value={props.email || ''}
                     onChange={props.changeEmail}
                 />
             </Form.Field>
@@ -45,7 +45,7 @@ const RegisterForm = props => (
                     onChange={props.changePassword}
                     placeholder='Password'
                     type='password'
-                    value={props.password}
+                    value={props.password || ''}
                 />
             </Form.Field>
         </Form>
@@ -67,8 +67,9 @@ class RegisterModal extends React.Component {
 
         this.submitForm = (username, email, password) => ev => {
             ev.preventDefault();
+            console.log(password);
             this.props.onSubmit(username, email, password);
-            this.props.onClose()
+            // this.props.onClose()
         }
 
     }
@@ -80,6 +81,7 @@ class RegisterModal extends React.Component {
 
         return (
             <Modal open={this.props.open} basic size='small'>
+                <Header as="h1" inverted color="grey" textAlign="center" content={'Welcome to Diesel'} />
                 <Header icon='add user' content={'Sign Up'} />
                 <Modal.Content>
                     <RegisterForm
@@ -94,8 +96,7 @@ class RegisterModal extends React.Component {
                 <Modal.Actions>
                     <Link to="/login" className="nav-link">
                         <Button
-                            basic
-                            color='blue'
+                            color='black'
                             inverted
                         >
                             <Icon name='sign in' /> Have an account?
@@ -104,7 +105,7 @@ class RegisterModal extends React.Component {
                     <Button
                         color='green'
                         inverted
-                        onClick={this.submitForm(email, password)}
+                        onClick={this.submitForm(username, email, password)}
                     >
                         <Icon name='add user' /> Sign Up
                     </Button>

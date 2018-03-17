@@ -22,7 +22,7 @@ const LoginForm = props => (
                     icon='mail'
                     iconPosition='left'
                     placeholder='Email'
-                    value={props.email}
+                    value={props.email || ''}
                     onChange={props.changeEmail}
                 />
             </Form.Field>
@@ -34,7 +34,7 @@ const LoginForm = props => (
                     onChange={props.changePassword}
                     placeholder='Password'
                     type='password'
-                    value={props.password}
+                    value={props.password || ''}
                 />
             </Form.Field>
         </Form>
@@ -56,7 +56,9 @@ class LoginModal extends React.Component {
         this.submitForm = (email, password) => ev => {
             ev.preventDefault();
             this.props.onSubmit(email, password);
-            this.props.onClose()
+            console.log('here', this.props);
+
+            // this.props.onClose()
         }
 
     }
@@ -67,6 +69,7 @@ class LoginModal extends React.Component {
 
         return (
             <Modal open={this.props.open} basic size='small'>
+                <Header as="h1" inverted color="grey" textAlign="center" content={'Welcome to Diesel'} />
                 <Header icon='sign in' content={'Sign In'} />
                 <Modal.Content>
                     <LoginForm
@@ -76,11 +79,11 @@ class LoginModal extends React.Component {
                         changePassword={this.changePassword}
                     />
                 </Modal.Content>
-                <Modal.Actions>
+
+                <Modal.Actions >
                     <Link to="/register" className="nav-link">
                         <Button
-                            basic
-                            color='blue'
+                            color='black'
                             inverted
                         >
                             <Icon name='add user' /> Need an account?

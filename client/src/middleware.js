@@ -1,5 +1,5 @@
 import agent from './agent'
-import { ASYNC_START, ASYNC_END, LOGIN, LOGOUT } from "./constants/actionTypes";
+import { ASYNC_START, ASYNC_END, LOGIN, LOGOUT, REGISTER } from "./constants/actionTypes";
 
 const isPromise = v => v && typeof v.then === 'function';
 
@@ -28,7 +28,7 @@ export const promiseMiddleware = store => next => action => {
 };
 
 export const localStorageMiddleware = store => next => action => {
-    if (action.type === LOGIN) {
+    if (action.type === REGISTER || action.type === LOGIN) {
         if (!action.error) {
             console.log(action.payload);
             window.localStorage.setItem('jwt', action.payload.user.token);

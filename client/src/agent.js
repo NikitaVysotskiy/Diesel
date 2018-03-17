@@ -22,7 +22,10 @@ const requests = {
 };
 
 const Auth = {
-    register: (username, email, password) => requests.post('/users', {user: {username, email, password}}),
+    register: (username, email, password) => {
+        console.log({user: {username, email, password}});
+        return requests.post('/users', {user: {username, email, password}})
+    },
     login: (email, password) => requests.post('/users/login', {user: {email, password}}),
     get: () => requests.get('/user')
 };
