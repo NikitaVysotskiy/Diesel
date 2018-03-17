@@ -1,21 +1,32 @@
-import React from 'react';
-import { connect } from "react-redux";
 import { Button, Form, Icon, Header, Modal, Segment } from 'semantic-ui-react';
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import React from 'react';
 
 import agent from "../../agent";
-import { LOGIN, UPDATE_FIELD_AUTH } from "../../constants/actionTypes";
-import {Link} from "react-router-dom";
+import { REGISTER, UPDATE_FIELD_AUTH } from "../../constants/actionTypes";
 
 const mapStateToProps = state => ({...state.auth});
 
 const mapDispatchToProps = dispatch => ({
     onUpdateField: (key, value) => dispatch({ type: UPDATE_FIELD_AUTH, key, value }),
-    onSubmit: (email, password) => dispatch({ type: LOGIN, payload: agent.Auth.login(email, password) })
+    onSubmit: (username, email, password) =>
+              dispatch({ type: REGISTER, payload: agent.Auth.register(username, email, password) })
 });
 
-const LoginForm = props => (
+const RegisterForm = props => (
     <Segment inverted>
         <Form inverted>
+            <Form.Field>
+                <Form.Input
+                    fluid
+                    icon='user circle'
+                    iconPosition='left'
+                    placeholder='Username'
+                    value={props.username}
+                    onChange={props.changeUsername}
+                />
+            </Form.Field>
             <Form.Field>
                 <Form.Input
                     fluid
@@ -41,7 +52,7 @@ const LoginForm = props => (
     </Segment>
 );
 
-class LoginModal extends React.Component {
+class RegisterModal extends React.Component {
 
     constructor(props) {
         super(props);
@@ -50,40 +61,44 @@ class LoginModal extends React.Component {
             this.props.onUpdateField(key, ev.target.value);
         };
 
+        this.changeUsername = updateFieldEvent('username');
         this.changeEmail = updateFieldEvent('email');
         this.changePassword = updateFieldEvent('password');
 
-        this.submitForm = (email, password) => ev => {
+        this.submitForm = (username, email, password) => ev => {
             ev.preventDefault();
-            this.props.onSubmit(email, password);
+            this.props.onSubmit(username, email, password);
             this.props.onClose()
         }
 
     }
 
     render() {
+        const username = this.props.username;
         const email = this.props.email;
         const password = this.props.password;
 
         return (
             <Modal open={this.props.open} basic size='small'>
-                <Header icon='sign in' content={'Sign In'} />
+                <Header icon='add user' content={'Sign Up'} />
                 <Modal.Content>
-                    <LoginForm
+                    <RegisterForm
+                        username={username}
                         email={email}
                         password={password}
+                        changeUsername={this.changeUsername}
                         changeEmail={this.changeEmail}
                         changePassword={this.changePassword}
                     />
                 </Modal.Content>
                 <Modal.Actions>
-                    <Link to="/register" className="nav-link">
+                    <Link to="/login" className="nav-link">
                         <Button
                             basic
                             color='blue'
                             inverted
                         >
-                            <Icon name='add user' /> Need an account?
+                            <Icon name='sign in' /> Have an account?
                         </Button>
                     </Link>
                     <Button
@@ -91,7 +106,7 @@ class LoginModal extends React.Component {
                         inverted
                         onClick={this.submitForm(email, password)}
                     >
-                        <Icon name='checkmark' /> Sign In
+                        <Icon name='add user' /> Sign Up
                     </Button>
                 </Modal.Actions>
             </Modal>
@@ -99,4 +114,4 @@ class LoginModal extends React.Component {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginModal);
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterModal);

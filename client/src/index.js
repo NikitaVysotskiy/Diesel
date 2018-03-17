@@ -7,6 +7,8 @@ import { Route, Switch } from "react-router-dom";
 import App from './components/App';
 import { history, store } from './store'
 
+import '../public/styles/index.css'
+
 ReactDOM.render(
     <Provider store={store}>
         <ConnectedRouter history={history}>
