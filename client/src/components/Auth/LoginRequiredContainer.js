@@ -1,31 +1,30 @@
+import {connect} from "react-redux";
 import { Component } from 'react';
+import { push } from "react-router-redux";
+
+import { REDIRECT } from "../../constants/actionTypes";
+import {store} from "../../store";
 
 
-// const mapStateToProps = (state, props) => {
-//     return {
-//         isLoggedIn: state.loggedIn,
-//         currentPath: props.location.pathname
-//     }
-// };
+const mapDispatchToProps = dispatch => ({
+    onRedirect: () => dispatch({ type: REDIRECT })
+});
+
 
 class LoginRequiredContainer extends Component {
 
-    // componentDidMount() {
-    //     const { dispatch, currentPath } = this.props;
-    //
-    //     if (!isLoggedIn) {
-    //         dispatch(setRedirectPath(currentPath));
-    //         browserHistory.replace("/login")
-    //     }
-    // }
-    //
-    // render() {
-    //     if (isLoggedIn) {
-    //         return this.props.children
-    //     } else {
-    //         return null
-    //     }
-    // }
+    componentWillMount() {
+        const token = window.localStorage.getItem('jwt');
+        if (!token) {
+            store.dispatch(push('/login'));
+            this.props.onRedirect();
+        }
+    }
+
+    render() {
+        console.log(this.props.children);
+        return this.props.children
+    }
 }
 
-export default LoginRequiredContainer;
+export default connect(null, mapDispatchToProps)(LoginRequiredContainer);

@@ -8,11 +8,13 @@ export default (state={}, action) => {
             }
             break;
         case LOGIN:
+            console.log(action);
             return {
                 ...state,
                 currentUser: action.payload ? action.payload.user : null,
-                inProgress: false,
                 errors: action.error ? action.payload.errors : null,
+                inProgress: false,
+                redirectTo: action.error ? null : '/',
                 token: action.error ? null : action.payload.user.token,
             };
         case LOGOUT:

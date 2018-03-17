@@ -5,12 +5,10 @@ import { Route, Switch } from "react-router-dom";
 
 import agent from "../agent";
 import { APP_LOAD, REDIRECT } from "../constants/actionTypes";
-// import EventRecorder from "./EventRecorder";
 import HeaderMenu from "./HeaderMenu";
 import Login from "./Auth/Login";
-// import LoginRequiredContainer from "./Auth/LoginRequiredContainer";
+import LoginRequiredContainer from "./Auth/LoginRequiredContainer";
 import Register from "./Auth/Register";
-// import RouteBuilder from "./RouteBuilder";
 import { store } from '../store';
 
 const mapStateToProps = state => {
@@ -47,14 +45,14 @@ class App extends Component {
             console.log(this.props.currentUser);
             return (
                 <div className="App">
-                    <HeaderMenu currentUser={this.props.currentUser}/>
                     <Switch>
                         <Route path="/login" component={Login}/>
                         <Route path="/register" component={Register}/>
-                        {/*<Route component={LoginRequiredContainer}>*/}
+                        <LoginRequiredContainer>
+                            <HeaderMenu currentUser={this.props.currentUser}/>
                             {/*<Route path="/route-builder" component={RouteBuilder}/>*/}
                             {/*<Route path="/event-recorder" component={EventRecorder}/>*/}
-                        {/*</Route>*/}
+                        </LoginRequiredContainer>
                     </Switch>
                 </div>
             );

@@ -1,16 +1,19 @@
-import React from 'react';
 import { connect } from "react-redux";
 import { Button, Form, Icon, Header, Modal, Segment } from 'semantic-ui-react';
+import { Link } from "react-router-dom";
+import { push } from "react-router-redux";
+import React from 'react';
 
 import agent from "../../agent";
-import { LOGIN, UPDATE_FIELD_AUTH } from "../../constants/actionTypes";
-import {Link} from "react-router-dom";
+import { LOGIN, REDIRECT, UPDATE_FIELD_AUTH } from "../../constants/actionTypes";
+import { store } from "../../store"
 
 const mapStateToProps = state => ({...state.auth});
 
 const mapDispatchToProps = dispatch => ({
     onUpdateField: (key, value) => dispatch({ type: UPDATE_FIELD_AUTH, key, value }),
-    onSubmit: (email, password) => dispatch({ type: LOGIN, payload: agent.Auth.login(email, password) })
+    onSubmit: (email, password) => dispatch({ type: LOGIN, payload: agent.Auth.login(email, password) }),
+    onRedirect: () => dispatch({ type: REDIRECT })
 });
 
 const LoginForm = props => (
@@ -43,6 +46,15 @@ const LoginForm = props => (
 
 class LoginModal extends React.Component {
 
+    componentWillReceiveProps(nextProps){
+        console.log(nextProps);
+        if (nextProps.redirectTo) {
+            console.log('redirect', nextProps.redirectTo);
+            store.dispatch(push(nextProps.redirectTo));
+            this.props.onRedirect();
+        }
+    }
+
     constructor(props) {
         super(props);
 
@@ -56,12 +68,9 @@ class LoginModal extends React.Component {
         this.submitForm = (email, password) => ev => {
             ev.preventDefault();
             this.props.onSubmit(email, password);
-            console.log('here', this.props);
-
-            // this.props.onClose()
         }
-
     }
+
 
     render() {
         const email = this.props.email;
