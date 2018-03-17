@@ -2,6 +2,7 @@ from flask import Flask
 
 from diesel import user
 from diesel.extensions import bcrypt, cache, db, migrate, jwt, cors
+from diesel.exceptions import InvalidUsage
 
 
 def create_app(config_object):
@@ -10,6 +11,7 @@ def create_app(config_object):
     app.config.from_object(config_object)
     register_extensions(app)
     register_blueprints(app)
+    regirter_errorhandlers(app)
     return app
 
 
@@ -26,3 +28,13 @@ def register_blueprints(app):
     cors.init_app(user.views.blueprint, origins=origins)
 
     app.register_blueprint(user.views.blueprint)
+
+
+def regirter_errorhandlers(app):
+
+    def errorhandler(error):
+        res = error.to_json()
+        res.status_code = error.status_code
+        return res
+
+    app.errorhandler(InvalidUsage)(errorhandler)

@@ -4,6 +4,7 @@ from flask_jwt import current_identity, jwt_required
 from sqlalchemy.exc import IntegrityError
 
 from diesel.extensions import db
+from diesel.exceptions import InvalidUsage
 from diesel.utils import jwt_optional
 from .models import User
 from .serializers import user_schema
@@ -19,8 +20,8 @@ def register_user(username, password, email, **kwargs):
         user = User(username, email, password=password, **kwargs).save()
     except IntegrityError:
         db.session.rollback()
-        print('User already registered: {}'.format(username))  # TODO: proper handling
-        raise Exception
+        print('User already registered: {}'.format(username))
+        raise InvalidUsage.user_already_registered()
     return user
 
 
@@ -33,8 +34,8 @@ def login_user(email, password, **kwargs):
     if user is not None and user.check_password(password):
         return user
     else:
-        print('User not found')  # TODO: proper handling
-        raise Exception 
+        print('User not found')
+        raise InvalidUsage.user_not_found()
 
 
 @blueprint.route('/api/user', methods=('GET',))
