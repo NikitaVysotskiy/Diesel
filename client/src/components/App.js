@@ -7,8 +7,8 @@ import agent from "../agent";
 import { APP_LOAD, REDIRECT } from "../constants/actionTypes";
 import HeaderMenu from "./HeaderMenu";
 import Login from "./Auth/Login";
-import LoginRequiredContainer from "./Auth/LoginRequiredContainer";
 import Register from "./Auth/Register";
+import RouteBuilder from "./RouteBuilder";
 import { store } from '../store';
 
 const mapStateToProps = state => {
@@ -31,7 +31,10 @@ class App extends Component {
     componentWillMount() {
         const token = window.localStorage.getItem('jwt');
         if (token) {
+            console.log('token present redirect');
             agent.setToken(token);
+            store.dispatch(push('/route-builder'));
+            this.props.onRedirect();
         } else {
             store.dispatch(push('/login'));
             this.props.onRedirect();
@@ -42,17 +45,13 @@ class App extends Component {
 
     render() {
         if (this.props.appLoaded) {
-            console.log(this.props.currentUser);
             return (
                 <div className="App">
                     <Switch>
                         <Route path="/login" component={Login}/>
                         <Route path="/register" component={Register}/>
-                        <LoginRequiredContainer>
-                            <HeaderMenu currentUser={this.props.currentUser}/>
-                            {/*<Route path="/route-builder" component={RouteBuilder}/>*/}
-                            {/*<Route path="/event-recorder" component={EventRecorder}/>*/}
-                        </LoginRequiredContainer>
+                        <HeaderMenu currentUser={this.props.currentUser}/>
+                        <Route path="/route-builder" component={RouteBuilder} />
                     </Switch>
                 </div>
             );

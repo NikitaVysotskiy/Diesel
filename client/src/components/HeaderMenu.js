@@ -1,12 +1,18 @@
 import { connect } from "react-redux";
 import { Icon, Menu, Segment } from 'semantic-ui-react';
+import { push } from "react-router-redux";
 import React, { Component } from 'react';
 
-import { LOGOUT } from "../constants/actionTypes";
+import { LOGOUT, REDIRECT } from "../constants/actionTypes";
+import { store } from "../store";
+
+
+const mapStateToProps = state => ({...state.auth});
 
 
 const mapDispatchToProps = dispatch => ({
     onLogoutClick: () => dispatch({ type: LOGOUT }),
+    onRedirect: () => dispatch({ type: REDIRECT })
 });
 
 class HeaderMenu extends  Component {
@@ -15,9 +21,15 @@ class HeaderMenu extends  Component {
 
     handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 
+    logout (onLogoutClick) {
+        onLogoutClick();
+        store.dispatch(push('/login'));
+        this.props.onRedirect();
+    }
+
     render() {
         const { activeItem } = this.state;
-        const { currentUser } = this.props;
+        const { currentUser, onLogoutClick } = this.props;
         if (currentUser) {
             return (
                 <Segment inverted>
@@ -35,7 +47,7 @@ class HeaderMenu extends  Component {
                                 <Icon name='user circle outline' />
                                 { this.props.currentUser.username }
                             </Menu.Item>
-                            <Menu.Item name='logout' onClick={this.props.onLogoutClick}>
+                            <Menu.Item name='logout' onClick={() => this.logout(onLogoutClick)}>
                                 <Icon name='sign out' />
                                 Logout
                             </Menu.Item>
@@ -49,4 +61,4 @@ class HeaderMenu extends  Component {
     }
 }
 
-export default connect(null, mapDispatchToProps)(HeaderMenu);
+export default connect(mapStateToProps, mapDispatchToProps)(HeaderMenu);

@@ -1,9 +1,10 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
+import { Segment } from "semantic-ui-react";
 
 
 class RouteBuilder extends Component {
     render() {
-        return 'ROUTE BUILDER'
+        return <Segment>ROUTE BUILDER</Segment>
     }
 }
 

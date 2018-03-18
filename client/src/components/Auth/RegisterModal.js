@@ -4,14 +4,17 @@ import { Link } from "react-router-dom";
 import React from 'react';
 
 import agent from "../../agent";
-import { REGISTER, UPDATE_FIELD_AUTH } from "../../constants/actionTypes";
+import {REDIRECT, REGISTER, UPDATE_FIELD_AUTH} from "../../constants/actionTypes";
+import {store} from "../../store";
+import {push} from "react-router-redux";
 
 const mapStateToProps = state => ({...state.auth});
 
 const mapDispatchToProps = dispatch => ({
     onUpdateField: (key, value) => dispatch({ type: UPDATE_FIELD_AUTH, key, value }),
     onSubmit: (username, email, password) =>
-              dispatch({ type: REGISTER, payload: agent.Auth.register(username, email, password) })
+              dispatch({ type: REGISTER, payload: agent.Auth.register(username, email, password) }),
+    onRedirect: () => dispatch({ type: REDIRECT })
 });
 
 const RegisterForm = props => (
@@ -54,6 +57,13 @@ const RegisterForm = props => (
 
 class RegisterModal extends React.Component {
 
+    componentWillReceiveProps(nextProps){
+        if (nextProps.redirectTo) {
+            store.dispatch(push(nextProps.redirectTo));
+            this.props.onRedirect();
+        }
+    }
+
     constructor(props) {
         super(props);
 
@@ -67,9 +77,7 @@ class RegisterModal extends React.Component {
 
         this.submitForm = (username, email, password) => ev => {
             ev.preventDefault();
-            console.log(password);
             this.props.onSubmit(username, email, password);
-            // this.props.onClose()
         }
 
     }

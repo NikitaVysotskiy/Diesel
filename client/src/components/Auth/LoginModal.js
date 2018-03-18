@@ -47,9 +47,7 @@ const LoginForm = props => (
 class LoginModal extends React.Component {
 
     componentWillReceiveProps(nextProps){
-        console.log(nextProps);
         if (nextProps.redirectTo) {
-            console.log('redirect', nextProps.redirectTo);
             store.dispatch(push(nextProps.redirectTo));
             this.props.onRedirect();
         }

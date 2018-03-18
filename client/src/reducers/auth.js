@@ -8,23 +8,23 @@ export default (state={}, action) => {
             }
             break;
         case LOGIN:
-            console.log(action);
             return {
                 ...state,
                 currentUser: action.payload ? action.payload.user : null,
                 errors: action.error ? action.payload.errors : null,
                 inProgress: false,
-                redirectTo: action.error ? null : '/',
+                redirectTo: action.error ? null : '/route-builder',
                 token: action.error ? null : action.payload.user.token,
             };
         case LOGOUT:
-            return {...state, redirectTo: '/login', token: null, currentUser: null};
+            return {...state, redirectTo:null, token: null, currentUser: null};
         case REGISTER:
             return {
                 ...state,
                 currentUser: action.payload ? action.payload.user : null,
-                inProgress: false,
                 errors: action.error ? action.payload.errors : null,
+                inProgress: false,
+                redirectTo: action.error ? null : '/route-builder',
                 token: action.error ? null : action.payload.user.token,
             };
         case UPDATE_FIELD_AUTH:
