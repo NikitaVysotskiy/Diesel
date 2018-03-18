@@ -1,9 +1,12 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
+import { Segment } from "semantic-ui-react";
 
 
 class EventRecorder extends Component {
     render() {
-        return ''
+        return (
+            <Segment>>Hot shoto 3 3 </Segment>
+        )
     }
 }
 
