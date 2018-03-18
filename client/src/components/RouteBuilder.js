@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { Segment } from "semantic-ui-react";
 
+// import { GoogleApiWrapper } from 'google-maps-react'
+
 
 class RouteBuilder extends Component {
     render() {
         return (
-            <Segment>>Hot shoto</Segment>
+            <Segment>>TEST</Segment>
         )
     }
 }
