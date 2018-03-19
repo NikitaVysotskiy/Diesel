@@ -1,6 +1,6 @@
 from flask import Flask
 
-from diesel import user
+from diesel import commands, user
 from diesel.extensions import bcrypt, cache, db, migrate, jwt, cors
 from diesel.exceptions import InvalidUsage
 
@@ -12,6 +12,7 @@ def create_app(config_object):
     register_extensions(app)
     register_blueprints(app)
     regirter_errorhandlers(app)
+    register_commands(app)
     return app
 
 
@@ -38,3 +39,8 @@ def regirter_errorhandlers(app):
         return res
 
     app.errorhandler(InvalidUsage)(errorhandler)
+
+
+def register_commands(app):
+    app.cli.add_command(commands.download_cars)
+
