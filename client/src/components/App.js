@@ -9,7 +9,7 @@ import EventRecorder from "./EventRecorder";
 import HeaderMenu from "./HeaderMenu";
 import Login from "./Auth/Login";
 import Register from "./Auth/Register";
-import RouteBuilder from "./RouteBuilder";
+import RouteBuilder from "./RouteBuilder/RouteBuilder";
 import { store } from '../store';
 
 const mapStateToProps = state => {
