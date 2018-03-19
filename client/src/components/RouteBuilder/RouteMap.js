@@ -30,8 +30,8 @@ class RouteMap extends Component {
 
     render() {
         const style = {
-            width: '95vw',
-            height: '90vh'
+            width: '73vw',
+            height: '88vh'
         };
 
         return (
