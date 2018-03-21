@@ -5,11 +5,25 @@ from bs4 import BeautifulSoup
 from flask.cli import with_appcontext
 
 from diesel.extensions import db
-from .models import FuelTypes, CarData
+from .models import CarData, FuelData, FuelKinds, FuelTypes, GasStations
 
 
-BASE_URL = 'infocar.ua'
-MAKE_MODELS_ENUM = [
+FUEL_URL = 'https://index.minfin.com.ua/markets/fuel/tm/'
+INFOCAR_URL = 'infocar.ua'
+
+HEADERS = {
+    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko)' +
+                  ' Chrome/39.0.2171.95 Safari/537.36'
+}
+
+GAS_STATIONS = [
+    'socar',
+    'wog',
+    'окко',
+    'укрнафта'
+]
+
+MAKE_MODELS = [
     'ford-transit-connect',
     'subaru-forester',
     'subaru-legacy',
@@ -22,17 +36,14 @@ MAKE_MODELS_ENUM = [
     'volkswagen-transporter',
     'volkswagen-caddy',
 ]
-HEADERS = {
-    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko)' +
-                  ' Chrome/39.0.2171.95 Safari/537.36'
-}
+
 
 
 @click.command()
 @with_appcontext
 def download_cars():
-    for make_model in MAKE_MODELS_ENUM:
-        generations_page_url = '.'.join(['http://' + make_model, BASE_URL])
+    for make_model in MAKE_MODELS:
+        generations_page_url = '.'.join(['http://' + make_model, INFOCAR_URL])
         raw = requests.get(generations_page_url, headers=HEADERS).text
         soup = BeautifulSoup(raw.encode('windows-1251'), 'lxml')
 
@@ -64,3 +75,27 @@ def download_cars():
 
                 db.session.add(car_data)
                 db.session.commit()
+
+
+@click.command()
+@with_appcontext
+def download_fuel_prices():
+    raw = requests.get(FUEL_URL, headers=HEADERS)
+    soup = BeautifulSoup(raw.text, 'lxml')
+
+    rows = soup.select('#tm-table tr')
+    filtered_rows = []
+
+    for row in rows:
+        for station in GasStations:
+            if station.value in row.text.lower():
+                for td, fuel_kind in zip(row.select('td')[1:], FuelKinds):
+                    fuel_data = FuelData(
+                        station=station,
+                        fuel_kind=fuel_kind,
+                        price=td.text
+                    )
+
+                    db.session.add(fuel_data)
+                    db.session.commit()
+

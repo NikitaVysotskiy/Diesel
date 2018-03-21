@@ -1,1 +1,1 @@
-from . import views, infocar_parser
+from . import views
