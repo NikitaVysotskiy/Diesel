@@ -1,6 +1,7 @@
 from flask import Flask
 
-from diesel import commands, user
+from diesel import user
+from diesel.car import infocar_parser
 from diesel.extensions import bcrypt, cache, db, migrate, jwt, cors
 from diesel.exceptions import InvalidUsage
 
@@ -42,5 +43,5 @@ def regirter_errorhandlers(app):
 
 
 def register_commands(app):
-    app.cli.add_command(commands.download_cars)
+    app.cli.add_command(infocar_parser.download_cars)
 

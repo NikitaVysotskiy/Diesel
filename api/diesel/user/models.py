@@ -33,6 +33,5 @@ class User(db.Model):
     def get_by_id(cls, user_id):
         return User.query.get(int(user_id))
 
-
     def __repr__(self):
         return 'User({username})'.format(username=self.username)
