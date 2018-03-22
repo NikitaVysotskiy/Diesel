@@ -4,6 +4,7 @@ import {Button, Divider, Form, Header, Icon, Segment, Statistic} from "semantic-
 
 class RouteForm extends Component {
     render() {
+        console.log('form', this.props.makeOptions);
         return (
             <Segment inverted>
                 <Form inverted>
@@ -14,7 +15,7 @@ class RouteForm extends Component {
                             fluid
                             search
                             selection
-                            // options={['Lol']}
+                            options={this.props.makeOptions}
                             placeholder='Brand'
                         />
                     </Form.Field>

@@ -32,15 +32,17 @@ class RouteBuilder extends Component {
     }
 
     render() {
-
-        console.log('makes', this.props.makes);
+        let makeOptions = [];
+        if (this.props.makes) {
+            makeOptions = this.props.makes.map((make, i) => ({key: i, value: make, text: make}));
+        }
 
         return (
             <Grid celled='internally'>
                 <Grid.Row>
 
                     <Grid.Column width={4}>
-                        <RouteForm />
+                        <RouteForm makeOptions={makeOptions}/>
                     </Grid.Column>
 
                     <Grid.Column width={10}>
