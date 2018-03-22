@@ -30,7 +30,12 @@ const Auth = {
     get: () => requests.get('/user')
 };
 
+const Makes = {
+    all: () => requests.get('/car/makes')
+};
+
 export default {
     Auth,
-    setToken: _token => { token = _token; }  // TODO: ???
+    Makes,
+    setToken: _token => { token = _token; }
 }

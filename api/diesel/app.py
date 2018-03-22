@@ -1,6 +1,6 @@
 from flask import Flask
 
-from diesel import user
+from diesel import user, car
 from diesel.car import parsers
 from diesel.extensions import bcrypt, cache, db, migrate, jwt, cors
 from diesel.exceptions import InvalidUsage
@@ -28,8 +28,10 @@ def register_extensions(app):
 def register_blueprints(app):
     origins = app.config.get('CORS_ORIGIN_WHITELIST', '*')
     cors.init_app(user.views.blueprint, origins=origins)
+    cors.init_app(car.views.blueprint, origins=origins)
 
     app.register_blueprint(user.views.blueprint)
+    app.register_blueprint(car.views.blueprint)
 
 
 def regirter_errorhandlers(app):
