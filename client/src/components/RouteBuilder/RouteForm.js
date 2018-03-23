@@ -4,7 +4,6 @@ import {Button, Divider, Form, Header, Icon, Segment, Statistic} from "semantic-
 
 class RouteForm extends Component {
     render() {
-        console.log('form', this.props.makeOptions);
         return (
             <Segment inverted>
                 <Form inverted>

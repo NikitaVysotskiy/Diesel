@@ -1,4 +1,3 @@
-
 from marshmallow import Schema, fields, post_dump, pre_load
 
 
@@ -8,7 +7,6 @@ class UserSchema(Schema):
     password = fields.Str(load_only=True)
     token = fields.Str(dump_only=True)
 
-    # TODO: remove
     user = fields.Nested('self', exclude=('user',), default=True, load_only=True)
 
     @pre_load
