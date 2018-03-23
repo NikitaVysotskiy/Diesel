@@ -4,7 +4,8 @@ export default (state={}, action) => {
     switch (action.type) {
         case MAKE_SELECTED:
             return {
-                ...state
+                ...state,
+                models: action.payload.models
             };
         case ROUTE_PAGE_LOADED:
             return {

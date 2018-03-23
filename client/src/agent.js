@@ -30,6 +30,10 @@ const Auth = {
     get: () => requests.get('/user')
 };
 
+const Models = {
+    all: make => requests.get(`/car/make/${make}/models`)
+};
+
 const Makes = {
     all: () => requests.get('/car/makes')
 };
@@ -42,5 +46,6 @@ export default {
     Auth,
     FuelPrices,
     Makes,
+    Models,
     setToken: _token => { token = _token; }
 }

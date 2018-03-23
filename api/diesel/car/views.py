@@ -32,7 +32,7 @@ def get_makes():
 
 @blueprint.route('/api/car/make/<make>/models')
 @jwt_required()
-def get_models(make):
+def get_models_by_make(make):
     return jsonify({
         'models': list(set(car_data.model.capitalize() for car_data in CarData.query.filter_by(make=make)))
     })

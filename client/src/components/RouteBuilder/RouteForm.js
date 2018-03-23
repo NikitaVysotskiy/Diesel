@@ -24,7 +24,7 @@ class RouteForm extends Component {
                             fluid
                             search
                             selection
-                            // options={['Lol']}
+                            options={this.props.modelsOptions}
                             placeholder='Model'
                         />
                     </Form.Field>
@@ -33,7 +33,7 @@ class RouteForm extends Component {
                             fluid
                             search
                             selection
-                            // options={['Lol']}
+                            options={[]}
                             placeholder='Engine'
                         />
                     </Form.Field>

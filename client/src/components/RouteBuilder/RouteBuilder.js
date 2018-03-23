@@ -24,9 +24,9 @@ const mapDispatchToProps = dispatch => ({
 
 class RouteBuilder extends Component {
 
-    handleMakeChange(e, { value }) {
-        // this.props.onMakeChange()  TODO: GET /car/makes/<value>/models
-    }
+    handleMakeChange = (e, { value }) => {
+        this.props.onMakeChange(agent.Models.all(value.toLowerCase()))
+    };
 
     componentWillMount() {
         this.props.onLoad(Promise.all([agent.FuelPrices.all(), agent.Makes.all(), ]))
@@ -37,17 +37,25 @@ class RouteBuilder extends Component {
     }
 
     render() {
+        // TODO: refactor
         let makesOptions = [];
         if (this.props.makes) {
             makesOptions = this.props.makes.map((make, i) => ({key: i, value: make, text: make}));
         }
+
+        let modelsOptions = [];
+        if (this.props.models) {
+            modelsOptions = this.props.models.map((model, i) => ({key: i, value: model, text: model}));
+        }
+        // -----
 
         return (
             <Grid celled='internally'>
                 <Grid.Row>
 
                     <Grid.Column width={4}>
-                        <RouteForm makeOptions={makesOptions}
+                        <RouteForm makesOptions={makesOptions}
+                                   modelsOptions={modelsOptions}
                                    handleMakeChange={this.handleMakeChange}
                         />
                     </Grid.Column>
