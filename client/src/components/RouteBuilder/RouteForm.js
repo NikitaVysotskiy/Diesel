@@ -13,10 +13,11 @@ class RouteForm extends Component {
                         <Header as="h3" color="grey" textAlign="center" content={'Select your car:'} />
                         <Form.Select
                             fluid
+                            onChange={this.props.handleMakeChange}
+                            options={this.props.makesOptions}
+                            placeholder='Brand'
                             search
                             selection
-                            options={this.props.makeOptions}
-                            placeholder='Brand'
                         />
                     </Form.Field>
                     <Form.Field>

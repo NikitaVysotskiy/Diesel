@@ -4,10 +4,11 @@ import { Grid } from "semantic-ui-react";
 import React, { Component } from 'react';
 
 import agent from "../../agent";
+import { MAKE_SELECTED, ROUTE_PAGE_LOADED, ROUTE_PAGE_UNLOADED } from "../../constants/actionTypes";
 import RouteForm from "./RouteForm";
 import RouteMap from "./RouteMap";
-import { ROUTE_PAGE_LOADED, ROUTE_PAGE_UNLOADED } from "../../constants/actionTypes";
 
+const Promise = global.Promise;
 
 const mapStateToProps = state => ({
     ...state.routeBuilder,
@@ -16,15 +17,19 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     onLoad: payload => dispatch({ type: ROUTE_PAGE_LOADED, payload }),
+    onMakeChange: payload => dispatch({ type: MAKE_SELECTED, payload }),
     onUnload: () => dispatch({ type: ROUTE_PAGE_UNLOADED })
 });
 
 
 class RouteBuilder extends Component {
 
-    componentWillMount() {
+    handleMakeChange(e, { value }) {
+        // this.props.onMakeChange()  TODO: GET /car/makes/<value>/models
+    }
 
-        this.props.onLoad(agent.Makes.all())
+    componentWillMount() {
+        this.props.onLoad(Promise.all([agent.FuelPrices.all(), agent.Makes.all(), ]))
     }
 
     componentWillUnmount() {
@@ -32,9 +37,9 @@ class RouteBuilder extends Component {
     }
 
     render() {
-        let makeOptions = [];
+        let makesOptions = [];
         if (this.props.makes) {
-            makeOptions = this.props.makes.map((make, i) => ({key: i, value: make, text: make}));
+            makesOptions = this.props.makes.map((make, i) => ({key: i, value: make, text: make}));
         }
 
         return (
@@ -42,7 +47,9 @@ class RouteBuilder extends Component {
                 <Grid.Row>
 
                     <Grid.Column width={4}>
-                        <RouteForm makeOptions={makeOptions}/>
+                        <RouteForm makeOptions={makesOptions}
+                                   handleMakeChange={this.handleMakeChange}
+                        />
                     </Grid.Column>
 
                     <Grid.Column width={10}>

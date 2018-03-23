@@ -3,6 +3,7 @@ export const ASYNC_START = 'ASYNC_START';
 export const ASYNC_END = 'ASYNC_END';
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
+export const MAKE_SELECTED = 'MAKE_SELECTED';
 export const REDIRECT = 'REDIRECT';
 export const REGISTER = 'REGISTER';
 export const ROUTE_PAGE_LOADED = 'ROUTE_PAGE_LOADED';

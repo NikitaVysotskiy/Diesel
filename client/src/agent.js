@@ -34,8 +34,13 @@ const Makes = {
     all: () => requests.get('/car/makes')
 };
 
+const FuelPrices = {
+    all: () => requests.get('/car/fuel-prices')
+};
+
 export default {
     Auth,
+    FuelPrices,
     Makes,
     setToken: _token => { token = _token; }
 }
