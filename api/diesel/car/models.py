@@ -10,10 +10,10 @@ class FuelTypes(enum.Enum):
 
 
 class GasStations(enum.Enum):
-    OKKO = 'окко'
-    SOCAR = 'socar'
-    WOG = 'wog'
-    UKR_NAFTA = 'укрнафта'
+    OKKO = 'ОККО'
+    SOCAR = 'Socar'
+    WOG = 'WOG'
+    UKR_NAFTA = 'УкрНафта'
 
 
 class FuelKinds(enum.Enum):
@@ -22,7 +22,7 @@ class FuelKinds(enum.Enum):
     A95_PLUS = 'A 95+'
     A95 = 'A 95'
     A92 = 'A 92'
-    DIESEL = 'DIESEL'
+    DIESEL = 'Diesel'
 
 
 class CarData(db.Model):
@@ -44,4 +44,4 @@ class FuelData(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     station = db.Column(db.Enum(GasStations), nullable=False)
     fuel_kind = db.Column(db.Enum(FuelKinds), nullable=False)
-    price = db.Column(db.String(20), nullable=False)  # TODO: float?
+    price = db.Column(db.Float, nullable=False)

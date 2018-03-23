@@ -84,16 +84,17 @@ def download_fuel_prices():
     soup = BeautifulSoup(raw.text, 'lxml')
 
     rows = soup.select('#tm-table tr')
-    filtered_rows = []
+
+    FuelData.query.delete()
 
     for row in rows:
         for station in GasStations:
-            if station.value in row.text.lower():
-                for td, fuel_kind in zip(row.select('td')[1:], FuelKinds):
+            if station.value.lower() in row.text.lower():
+                for td, fuel_kind in zip(row.select('td')[2:], FuelKinds):
                     fuel_data = FuelData(
                         station=station,
                         fuel_kind=fuel_kind,
-                        price=td.text
+                        price=float(td.text.replace(',', '.'))
                     )
 
                     db.session.add(fuel_data)
