@@ -44,8 +44,25 @@ class RouteBuilder extends Component {
         });
     };
 
+    handleStationChange = (e, { value }) => {
+        console.log(value);
+        this.setState({
+            fuelsOptions: this.props.fuelPrices
+                            .filter(f => f.station === value)[0]
+                            .fuels.map((fuel, i) => ({
+                                key: i,
+                                value: fuel.fuel_kind,
+                                text: `${fuel.fuel_kind} (${fuel.price} UAH)`
+                            }))
+        })
+    };
+
     componentWillMount() {
-        this.props.onLoad(Promise.all([agent.FuelPrices.all(), agent.Makes.all(), ]))
+        this.props.onLoad(Promise.all([
+            agent.FuelData.prices(),
+            agent.FuelData.stations(),
+            agent.Makes.all(),
+        ]))
     }
 
     componentWillUnmount() {
@@ -78,9 +95,20 @@ class RouteBuilder extends Component {
                 })
             );
         }
+
+        let stationsOptions = [];
+        if (this.props.stations) {
+            stationsOptions = this.props.stations.map(
+                (station, i) => ({
+                    key: i,
+                    value: station,
+                    text: station
+                })
+            );
+        }
         // -----
 
-        const { fuelConsumptions } = this.state || {};
+        const { fuelConsumptions, fuelsOptions } = this.state || {};
         return (
             <Grid celled='internally'>
                 <Grid.Row>
@@ -89,9 +117,12 @@ class RouteBuilder extends Component {
                         <RouteForm makesOptions={makesOptions}
                                    modelsOptions={modelsOptions}
                                    enginesOptions={enginesOptions}
+                                   stationsOptions={stationsOptions}
+                                   fuelsOptions={fuelsOptions}
                                    handleMakeChange={this.handleMakeChange}
                                    handleModelChange={this.handleModelChange}
                                    handleEngineChange={this.handleEngineChange}
+                                   handleStationChange={this.handleStationChange}
                                    fuelConsumptions={fuelConsumptions}
                         />
                     </Grid.Column>

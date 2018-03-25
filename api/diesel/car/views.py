@@ -19,7 +19,7 @@ def get_fuel_prices():
 @blueprint.route('/api/car/gas-stations', methods=('GET',))
 @jwt_required()
 def get_gas_stations():
-    return jsonify({'gasStations': [e.value for e in GasStations]})
+    return jsonify({'stations': [e.value for e in GasStations]})
 
 
 @blueprint.route('/api/car/makes', methods=('GET',))

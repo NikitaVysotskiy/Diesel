@@ -40,13 +40,15 @@ const Makes = {
     all: () => requests.get('/car/makes')
 };
 
-const FuelPrices = {
-    all: () => requests.get('/car/fuel-prices')
+
+const FuelData = {
+    prices: () => requests.get('/car/fuel-prices'),
+    stations: () => requests.get('/car/gas-stations')
 };
 
 export default {
     Auth,
-    FuelPrices,
+    FuelData,
     Makes,
     Models,
     setToken: _token => { token = _token; }

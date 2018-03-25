@@ -86,14 +86,19 @@ class RouteForm extends Component {
                 <Form inverted>
                     <Form.Field>
                         <Header as="h3" color="grey" textAlign="center" content={'Gas Station:'} />
-                        <Form.Input
+                        <Form.Select
                             fluid
+                            onChange={this.props.handleStationChange}
+                            options={this.props.stationsOptions}
+                            selection
                             placeholder='Gas station'
                         />
                     </Form.Field>
                     <Form.Field>
-                        <Form.Input
+                        <Form.Select
                             fluid
+                            options={this.props.fuelsOptions || []}
+                            selection
                             placeholder='Fuel'
                         />
                     </Form.Field>

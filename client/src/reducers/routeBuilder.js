@@ -22,7 +22,8 @@ export default (state={}, action) => {
             return {
                 ...state,
                 fuelPrices: action.payload[0].fuelPrices,
-                makes: action.payload[1].makes,
+                stations: action.payload[1].stations,
+                makes: action.payload[2].makes,
             };
         case ROUTE_PAGE_UNLOADED:
             return {};
