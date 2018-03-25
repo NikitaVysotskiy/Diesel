@@ -10,6 +10,7 @@ export default (state={}, action) => {
         case MAKE_SELECTED:
             return {
                 ...state,
+                engines: [],
                 models: action.payload.models
             };
         case MODEL_SELECTED:

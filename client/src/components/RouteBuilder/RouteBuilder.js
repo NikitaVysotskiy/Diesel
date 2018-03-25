@@ -26,14 +26,22 @@ const mapDispatchToProps = dispatch => ({
 class RouteBuilder extends Component {
 
     handleMakeChange = (e, { value }) => {
-        this.setState({ make: value });
+        this.setState({ make: value, fuelConsumptions: [] });
         this.props.onMakeChange(agent.Models.modelsForMake(value.toLowerCase()))
     };
 
     handleModelChange = (e, { value }) => {
-        console.log(value);
+        this.setState({ fuelConsumptions: [] });
         const { submodel, years } = JSON.parse(value);
         this.props.onModelChange(agent.Models.enginesForModel(this.state.make, submodel, years))
+    };
+
+    handleEngineChange = (e, { value }) => {
+        this.setState({
+            fuelConsumptions: this.props.engines.filter(
+                engineData => engineData.engine === value
+            )[0].fuel_consumptions.split(' ')
+        });
     };
 
     componentWillMount() {
@@ -60,12 +68,19 @@ class RouteBuilder extends Component {
             }));
         }
 
+        let enginesOptions = [];
         if (this.props.engines) {
-            console.log(this.props.engines);
+            enginesOptions = this.props.engines.map(
+                (engineData, i) => ({
+                    key: i,
+                    value: engineData.engine,
+                    text: `${engineData.engine} (${engineData.fuel_type})`
+                })
+            );
         }
         // -----
 
-
+        const { fuelConsumptions } = this.state || {};
         return (
             <Grid celled='internally'>
                 <Grid.Row>
@@ -73,8 +88,11 @@ class RouteBuilder extends Component {
                     <Grid.Column width={4}>
                         <RouteForm makesOptions={makesOptions}
                                    modelsOptions={modelsOptions}
+                                   enginesOptions={enginesOptions}
                                    handleMakeChange={this.handleMakeChange}
                                    handleModelChange={this.handleModelChange}
+                                   handleEngineChange={this.handleEngineChange}
+                                   fuelConsumptions={fuelConsumptions}
                         />
                     </Grid.Column>
 

@@ -66,6 +66,7 @@ def download_cars():
                 fuel_tags = engine.select('.kppdiv')[0].select('.privod span')
                 fuel_consumptions = [tag.text.split(' ')[0] for tag in fuel_tags if 'л' in tag.text]
 
+                # TODO: add horse powers
                 car_data = CarData(
                     make=make,
                     model=model,

@@ -3,6 +3,28 @@ import {Button, Divider, Form, Header, Icon, Segment, Statistic} from "semantic-
 
 
 class RouteForm extends Component {
+    renderFuelConsumptions(arr) {
+        const labels = ['City', 'Highway', 'Mixed'];
+        if (arr) {
+            if (arr.length === 3 && arr[2] === "0") {
+                arr = arr.slice(0, 2)
+            }
+            return (
+                <Segment inverted>
+                    <Header as="h3" color="grey" textAlign="center" content={'Fuel Consumption:'}/>
+                    {arr.map((consumption, i) => (
+                        <Statistic size="mini" inverted key={i}>
+                            <Statistic.Value>{consumption}</Statistic.Value>
+                            <Statistic.Label>{labels[i]}</Statistic.Label>
+                        </Statistic>
+                    ))}
+                </Segment>
+            )
+        } else {
+            return null
+        }
+    }
+
     render() {
         return (
             <Segment inverted>
@@ -34,28 +56,13 @@ class RouteForm extends Component {
                             fluid
                             search
                             selection
-                            options={[]}
+                            onChange={this.props.handleEngineChange}
+                            options={this.props.enginesOptions}
                             placeholder='Engine'
                         />
                     </Form.Field>
                 </Form>
-                <Segment inverted>
-                    <Header as="h3" color="grey" textAlign="center" content={'Fuel Consumption:'} />
-                    <Statistic size="mini" inverted>
-                        <Statistic.Value>10.6</Statistic.Value>
-                        <Statistic.Label>City</Statistic.Label>
-                    </Statistic>
-
-                    <Statistic size="mini" inverted>
-                        <Statistic.Value>10.6</Statistic.Value>
-                        <Statistic.Label>Highway</Statistic.Label>
-                    </Statistic>
-
-                    <Statistic size="mini" inverted>
-                        <Statistic.Value>10.6</Statistic.Value>
-                        <Statistic.Label>Mixed</Statistic.Label>
-                    </Statistic>
-                </Segment>
+                {this.renderFuelConsumptions(this.props.fuelConsumptions)}
                 <Divider />
                 <Form inverted>
                     <Form.Field>
