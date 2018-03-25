@@ -15,7 +15,7 @@ export default (state={}, action) => {
         case MODEL_SELECTED:
             return {
                 ...state,
-                submodels: action.payload.submodels
+                engines: action.payload.engines
             };
         case ROUTE_PAGE_LOADED:
             return {

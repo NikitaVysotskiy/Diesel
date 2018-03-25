@@ -3,7 +3,7 @@ from flask_apispec import marshal_with, use_kwargs
 from flask_jwt import jwt_required
 
 from .models import CarData, FuelData, GasStations
-from .serializers import fuel_data_schema, submodels_schema
+from .serializers import fuel_data_schema, submodels_schema, submodel_schema, engines_schema
 
 
 blueprint = Blueprint('car', __name__)
@@ -36,10 +36,10 @@ def get_models_by_make(make):
     return CarData.query.filter_by(make=make)
 
 
-@blueprint.route('/api/car/make/<make>/models/<model>/submodels')
+@blueprint.route('/api/car/make/<make>/models/engines')
 @jwt_required()
-def get_models(make, model):
-    return jsonify({
-        'submodels': ['hereitgoes']
-    })
+@use_kwargs(submodel_schema)
+@marshal_with(engines_schema)
+def get_engines(make, submodel, years):
+    return CarData.query.filter_by(make=make.lower(), submodel=submodel, years=years)
 

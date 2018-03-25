@@ -38,6 +38,7 @@ class SubmodelsSchema(CarDataSchema):
     @post_dump(pass_many=True)
     def dump_many(self, data, many):
         # make unique list of dicts
+        # TODO: sort
         return {'models': [dict(y) for y in set(tuple(x.items()) for x in data)]}
 
     class Meta:
@@ -45,5 +46,19 @@ class SubmodelsSchema(CarDataSchema):
         fields = ('submodel', 'years')
 
 
+class EnginesSchema(CarDataSchema):
+
+    @post_dump(pass_many=True)
+    def dump_many(self, data, many):
+        # TODO: sort
+        return {'engines': data}
+
+    class Meta:
+        strict = True
+        fields = ('engine', 'fuel_type', 'fuel_consumptions')
+
+
 fuel_data_schema = FuelDataSchema(many=True)
+submodel_schema = SubmodelsSchema()
 submodels_schema = SubmodelsSchema(many=True)
+engines_schema = EnginesSchema(many=True)

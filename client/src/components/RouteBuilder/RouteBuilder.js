@@ -31,7 +31,9 @@ class RouteBuilder extends Component {
     };
 
     handleModelChange = (e, { value }) => {
-        this.props.onModelChange(agent.Models.submodelsForModel(this.state.make, value.toLowerCase()))
+        console.log(value);
+        const { submodel, years } = JSON.parse(value);
+        this.props.onModelChange(agent.Models.enginesForModel(this.state.make, submodel, years))
     };
 
     componentWillMount() {
@@ -51,13 +53,18 @@ class RouteBuilder extends Component {
 
         let modelsOptions = [];
         if (this.props.models) {
-            modelsOptions = this.props.models.map((model, i) => ({key: i, value: model, text: model}));
+            modelsOptions = this.props.models.map((model, i) => ({
+                key: i,
+                value: JSON.stringify(model),
+                text: `${model.submodel} (${model.years})`
+            }));
+        }
+
+        if (this.props.engines) {
+            console.log(this.props.engines);
         }
         // -----
 
-        if (this.props.submodels) {
-            console.log(this.props.submodels);
-        }
 
         return (
             <Grid celled='internally'>

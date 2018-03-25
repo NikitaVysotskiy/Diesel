@@ -32,7 +32,8 @@ const Auth = {
 
 const Models = {
     modelsForMake: make => requests.get(`/car/make/${make}/models`),
-    submodelsForModel: (make, model) => requests.get(`/car/make/${make}/models/${model}/submodels`)
+    enginesForModel: (make, submodel, years) =>
+                     requests.get(`/car/make/${make}/models/engines?submodel=${submodel}&years=${years}`)
 };
 
 const Makes = {

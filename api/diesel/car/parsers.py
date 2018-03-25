@@ -38,10 +38,12 @@ MAKE_MODELS = [
 ]
 
 
-
 @click.command()
 @with_appcontext
 def download_cars():
+
+    CarData.query.delete()
+
     for make_model in MAKE_MODELS:
         generations_page_url = '.'.join(['http://' + make_model, INFOCAR_URL])
         raw = requests.get(generations_page_url, headers=HEADERS).text
@@ -49,7 +51,8 @@ def download_cars():
 
         make, model = make_model.split('-', 1)
         for submodel_card in soup.select('.submodel'):
-            submodel = submodel_card.select('a.modela')[0].text
+            # TODO: handle multiple words make names
+            submodel = submodel_card.select('a.modela')[0].text.split(' ', 1)[1]
             details_link = submodel_card.select('.modellinks a')[1]['href']
             years = submodel_card.select('strong.models')[0].find(text=True, recursive=False).strip()
 
