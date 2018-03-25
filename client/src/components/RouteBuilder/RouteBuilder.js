@@ -4,7 +4,7 @@ import { Grid } from "semantic-ui-react";
 import React, { Component } from 'react';
 
 import agent from "../../agent";
-import { MAKE_SELECTED, ROUTE_PAGE_LOADED, ROUTE_PAGE_UNLOADED } from "../../constants/actionTypes";
+import { MAKE_SELECTED, MODEL_SELECTED, ROUTE_PAGE_LOADED, ROUTE_PAGE_UNLOADED } from "../../constants/actionTypes";
 import RouteForm from "./RouteForm";
 import RouteMap from "./RouteMap";
 
@@ -18,6 +18,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     onLoad: payload => dispatch({ type: ROUTE_PAGE_LOADED, payload }),
     onMakeChange: payload => dispatch({ type: MAKE_SELECTED, payload }),
+    onModelChange: payload => dispatch({ type: MODEL_SELECTED, payload }),
     onUnload: () => dispatch({ type: ROUTE_PAGE_UNLOADED })
 });
 
@@ -25,7 +26,12 @@ const mapDispatchToProps = dispatch => ({
 class RouteBuilder extends Component {
 
     handleMakeChange = (e, { value }) => {
-        this.props.onMakeChange(agent.Models.all(value.toLowerCase()))
+        this.setState({ make: value });
+        this.props.onMakeChange(agent.Models.modelsForMake(value.toLowerCase()))
+    };
+
+    handleModelChange = (e, { value }) => {
+        this.props.onModelChange(agent.Models.submodelsForModel(this.state.make, value.toLowerCase()))
     };
 
     componentWillMount() {
@@ -49,6 +55,10 @@ class RouteBuilder extends Component {
         }
         // -----
 
+        if (this.props.submodels) {
+            console.log(this.props.submodels);
+        }
+
         return (
             <Grid celled='internally'>
                 <Grid.Row>
@@ -57,6 +67,7 @@ class RouteBuilder extends Component {
                         <RouteForm makesOptions={makesOptions}
                                    modelsOptions={modelsOptions}
                                    handleMakeChange={this.handleMakeChange}
+                                   handleModelChange={this.handleModelChange}
                         />
                     </Grid.Column>
 

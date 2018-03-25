@@ -24,6 +24,7 @@ class RouteForm extends Component {
                             fluid
                             search
                             selection
+                            onChange={this.props.handleModelChange}
                             options={this.props.modelsOptions}
                             placeholder='Model'
                         />

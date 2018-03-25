@@ -34,7 +34,7 @@ def get_makes():
 @jwt_required()
 def get_models_by_make(make):
     return jsonify({
-        'models': list(set(car_data.model.capitalize() for car_data in CarData.query.filter_by(make=make)))
+        'models': list(set(car_data.model for car_data in CarData.query.filter_by(make=make)))
     })
 
 
@@ -42,6 +42,6 @@ def get_models_by_make(make):
 @jwt_required()
 def get_models(make, model):
     return jsonify({
-
+        'submodels': ['hereitgoes']
     })
 

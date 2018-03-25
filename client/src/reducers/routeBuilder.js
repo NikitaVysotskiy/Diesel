@@ -1,4 +1,9 @@
-import { MAKE_SELECTED, ROUTE_PAGE_LOADED, ROUTE_PAGE_UNLOADED } from "../constants/actionTypes";
+import {
+    MAKE_SELECTED,
+    MODEL_SELECTED,
+    ROUTE_PAGE_LOADED,
+    ROUTE_PAGE_UNLOADED
+} from "../constants/actionTypes";
 
 export default (state={}, action) => {
     switch (action.type) {
@@ -6,6 +11,11 @@ export default (state={}, action) => {
             return {
                 ...state,
                 models: action.payload.models
+            };
+        case MODEL_SELECTED:
+            return {
+                ...state,
+                submodels: action.payload.submodels
             };
         case ROUTE_PAGE_LOADED:
             return {
