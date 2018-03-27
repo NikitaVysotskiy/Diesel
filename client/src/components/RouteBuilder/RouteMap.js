@@ -25,6 +25,27 @@ class RouteMap extends Component {
                 mapTypeId: 'terrain'
             });
             this.map = new maps.Map(node, mapConfig);
+
+            const directionsService = new maps.DirectionsService();
+            const directionsDisplay = new maps.DirectionsRenderer();
+            directionsDisplay.setMap(this.map);
+
+            const request = {
+                origin: 'kiyv',
+                destination: 'lviv',
+                travelMode: 'DRIVING',
+                provideRouteAlternatives: true
+            };
+            directionsService.route(request, (res, status) => {
+                if (status === 'OK') {
+                    console.log(res);
+                    directionsDisplay.setDirections(res)
+                } else {
+                    console.log('err', status);
+                }
+            })
+
+
         }
     }
 
