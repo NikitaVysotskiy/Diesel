@@ -57,6 +57,13 @@ class RouteBuilder extends Component {
         })
     };
 
+    onRouteInputUpdate = (e, { value }) => {
+        console.log(e, value);
+        // this.setState({
+        //
+        // })
+    };
+
     componentWillMount() {
         this.props.onLoad(Promise.all([
             agent.FuelData.prices(),
@@ -124,6 +131,7 @@ class RouteBuilder extends Component {
                                    handleEngineChange={this.handleEngineChange}
                                    handleStationChange={this.handleStationChange}
                                    fuelConsumptions={fuelConsumptions}
+                                   onRouteInputUpdate={this.onRouteInputUpdate}
                         />
                     </Grid.Column>
 

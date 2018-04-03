@@ -44,8 +44,6 @@ class RouteMap extends Component {
                     console.log('err', status);
                 }
             })
-
-
         }
     }
 

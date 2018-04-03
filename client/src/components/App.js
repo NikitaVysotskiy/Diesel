@@ -35,8 +35,8 @@ class App extends Component {
             console.log('token present redirect');
             agent.setToken(token);
             // TODO: redirect on '/'
-            // store.dispatch(push('/route-builder'));
-            // this.props.onRedirect();
+            store.dispatch(push('/route-builder'));
+            this.props.onRedirect();
         } else {
             store.dispatch(push('/login'));
             this.props.onRedirect();

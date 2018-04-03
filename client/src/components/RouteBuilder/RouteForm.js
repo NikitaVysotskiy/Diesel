@@ -69,12 +69,14 @@ class RouteForm extends Component {
                         <Header as="h3" color="grey" textAlign="center" content={'Route:'} />
                         <Form.Input
                             fluid
+                            onChange={this.props.onRouteInputUpdate}
                             placeholder='From'
                         />
                     </Form.Field>
                     <Form.Field>
                         <Form.Input
                             fluid
+                            onChange={this.props.onRouteInputUpdate}
                             placeholder='To'
                         />
                     </Form.Field>
