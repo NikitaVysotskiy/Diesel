@@ -94,28 +94,25 @@ class RouteBuilder extends Component {
 
         let enginesOptions = [];
         if (this.props.engines) {
-            enginesOptions = this.props.engines.map(
-                (engineData, i) => ({
-                    key: i,
-                    value: engineData.engine,
-                    text: `${engineData.engine} (${engineData.fuel_type})`
-                })
-            );
+            enginesOptions = this.props.engines.map((engineData, i) => ({
+                key: i,
+                value: engineData.engine,
+                text: `${engineData.engine} (${engineData.fuel_type})`
+            }));
         }
 
         let stationsOptions = [];
         if (this.props.stations) {
-            stationsOptions = this.props.stations.map(
-                (station, i) => ({
-                    key: i,
-                    value: station,
-                    text: station
-                })
-            );
+            stationsOptions = this.props.stations.map((station, i) => ({
+                key: i,
+                value: station,
+                text: station
+            }));
         }
         // -----
 
         const { fuelConsumptions, fuelsOptions } = this.state || {};
+
         return (
             <Grid celled='internally'>
                 <Grid.Row>
@@ -132,6 +129,7 @@ class RouteBuilder extends Component {
                                    handleStationChange={this.handleStationChange}
                                    fuelConsumptions={fuelConsumptions}
                                    onRouteInputUpdate={this.onRouteInputUpdate}
+                                   google={this.props.google}
                         />
                     </Grid.Column>
 

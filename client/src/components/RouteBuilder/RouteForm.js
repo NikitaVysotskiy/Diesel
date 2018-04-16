@@ -1,8 +1,29 @@
 import React, { Component } from 'react';
-import {Button, Divider, Form, Header, Icon, Segment, Statistic} from "semantic-ui-react";
+import {Button, Divider, Form, Header, Icon, Input, Segment, Statistic} from "semantic-ui-react";
+import ReactDOM from "react-dom";
 
 
 class RouteForm extends Component {
+
+    getInputRef = type => node => {type === 'origin' ? this._originInput = node : this._routeInput = node};
+
+    loadAutocomplete() {
+        if (this.props.google) {
+            // TODO: handle multiple inputs
+            const node1 = ReactDOM.findDOMNode(this._originInput.inputRef);
+            const node2 = ReactDOM.findDOMNode(this._routeInput.inputRef);
+
+            new this.props.google.maps.places.Autocomplete(node1);
+            new this.props.google.maps.places.Autocomplete(node2);
+        }
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.google !== this.props.google) {
+            this.loadAutocomplete();
+        }
+    }
+
     renderFuelConsumptions(arr) {
         const labels = ['City', 'Highway', 'Mixed'];
         if (arr) {
@@ -67,17 +88,19 @@ class RouteForm extends Component {
                 <Form inverted>
                     <Form.Field>
                         <Header as="h3" color="grey" textAlign="center" content={'Route:'} />
-                        <Form.Input
+                        <Input
                             fluid
                             onChange={this.props.onRouteInputUpdate}
                             placeholder='From'
+                            ref={this.getInputRef('origin')}
                         />
                     </Form.Field>
                     <Form.Field>
-                        <Form.Input
+                        <Input
                             fluid
                             onChange={this.props.onRouteInputUpdate}
                             placeholder='To'
+                            ref={this.getInputRef()}
                         />
                     </Form.Field>
                     <Button icon secondary labelPosition='left'>
