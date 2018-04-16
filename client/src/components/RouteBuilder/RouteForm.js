@@ -5,7 +5,19 @@ import ReactDOM from "react-dom";
 
 class RouteForm extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {origin: '', destination: ''}
+    }
+
     getInputRef = type => node => {type === 'origin' ? this._originInput = node : this._routeInput = node};
+
+    buildRoute = () => {
+        const { origin, destination } = this.state;
+        if (origin && destination) {
+            this.props.renderRoute(origin, destination);
+        }
+    };
 
     loadAutocomplete() {
         if (this.props.google) {
@@ -13,8 +25,17 @@ class RouteForm extends Component {
             const node1 = ReactDOM.findDOMNode(this._originInput.inputRef);
             const node2 = ReactDOM.findDOMNode(this._routeInput.inputRef);
 
-            new this.props.google.maps.places.Autocomplete(node1);
-            new this.props.google.maps.places.Autocomplete(node2);
+            const originAutocomplete = new this.props.google.maps.places.Autocomplete(node1);
+            originAutocomplete.addListener('place_changed', () => {
+                const origin = originAutocomplete.getPlace();
+                this.setState({origin: origin});
+            });
+
+            const destinationAutocomplete = new this.props.google.maps.places.Autocomplete(node2);
+            destinationAutocomplete.addListener('place_changed', () => {
+                const destination = destinationAutocomplete.getPlace();
+                this.setState({destination: destination});
+            });
         }
     }
 
@@ -129,7 +150,7 @@ class RouteForm extends Component {
                     </Form.Field>
                 </Form>
                 <Segment inverted>
-                    <Button primary>
+                    <Button primary onClick={this.buildRoute}>
                         Build a route
                     </Button>
                 </Segment>

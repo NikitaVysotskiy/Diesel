@@ -76,6 +76,10 @@ class RouteBuilder extends Component {
         this.props.onUnload();
     }
 
+    renderRoute = (origin, destination) => {
+        this.routeMap.renderRoute(origin, destination)
+    };
+
     render() {
         // TODO: refactor
         let makesOptions = [];
@@ -130,11 +134,12 @@ class RouteBuilder extends Component {
                                    fuelConsumptions={fuelConsumptions}
                                    onRouteInputUpdate={this.onRouteInputUpdate}
                                    google={this.props.google}
+                                   renderRoute={this.renderRoute}
                         />
                     </Grid.Column>
 
                     <Grid.Column width={10}>
-                        <RouteMap google={this.props.google}/>
+                        <RouteMap ref={node => {this.routeMap = node}} google={this.props.google}/>
                     </Grid.Column>
 
                 </Grid.Row>

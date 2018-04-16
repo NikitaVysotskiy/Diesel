@@ -10,6 +10,25 @@ class RouteMap extends Component {
         }
     }
 
+    renderRoute(origin, destination) {
+        console.log(origin, destination);
+        const request = {
+            origin: origin.geometry.location,
+            destination: destination.geometry.location,
+            travelMode: 'DRIVING',
+            provideRouteAlternatives: true
+        };
+
+        this.directionsService.route(request, (res, status) => {
+            if (status === 'OK') {
+                console.log(res);
+                this.directionsDisplay.setDirections(res)
+            } else {
+                console.log('err', status);
+            }
+        })
+    }
+
     loadMap() {
         if (this.props && this.props.google) {
             const { google } = this.props;
@@ -26,24 +45,9 @@ class RouteMap extends Component {
             });
             this.map = new maps.Map(node, mapConfig);
 
-            const directionsService = new maps.DirectionsService();
-            const directionsDisplay = new maps.DirectionsRenderer();
-            directionsDisplay.setMap(this.map);
-
-            const request = {
-                origin: 'kiyv',
-                destination: 'lviv',
-                travelMode: 'DRIVING',
-                provideRouteAlternatives: true
-            };
-            directionsService.route(request, (res, status) => {
-                if (status === 'OK') {
-                    console.log(res);
-                    directionsDisplay.setDirections(res)
-                } else {
-                    console.log('err', status);
-                }
-            })
+            this.directionsService = new maps.DirectionsService();
+            this.directionsDisplay = new maps.DirectionsRenderer();
+            this.directionsDisplay.setMap(this.map);
         }
     }
 
