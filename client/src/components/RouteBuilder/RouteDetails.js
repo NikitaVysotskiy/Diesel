@@ -12,6 +12,7 @@ class RouteDetails extends Component {
                     <Statistic.Value>2500 UAH</Statistic.Value>
                     <Statistic.Label>PRICE</Statistic.Label>
                 </Statistic>
+                {this.props.routeDetails && this.props.routeDetails.directionsRes.routes[0].legs[0].distance.text}
             </div>
         )
     }

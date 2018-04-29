@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom'
+import { ROUTE_RENDERED } from "../../constants/actionTypes";
+import {connect} from "react-redux";
+
+
+const mapDispatchToProps = dispatch => ({
+    onRouteRender: payload => dispatch({ type: ROUTE_RENDERED, payload })
+});
 
 
 class RouteMap extends Component {
@@ -10,8 +17,7 @@ class RouteMap extends Component {
         }
     }
 
-    renderRoute(origin, destination) {
-        console.log(origin, destination);
+    renderRoute(origin, destination, fuelConsumption=0, fuelPrice=0) {
         const request = {
             origin: origin.geometry.location,
             destination: destination.geometry.location,
@@ -22,11 +28,17 @@ class RouteMap extends Component {
         this.directionsService.route(request, (res, status) => {
             if (status === 'OK') {
                 console.log(res);
-                this.directionsDisplay.setDirections(res)
+                this.directionsDisplay.setDirections(res);
+                this.props.onRouteRender({
+                    directionsRes: res,
+                    fuelConsumption,
+                    fuelPrice
+                })
+
             } else {
                 console.log('err', status);
             }
-        })
+        });
     }
 
     loadMap() {
@@ -66,4 +78,4 @@ class RouteMap extends Component {
     }
 }
 
-export default RouteMap;
+export default connect(null, mapDispatchToProps, null, { withRef: true })(RouteMap);

@@ -2,7 +2,8 @@ import {
     MAKE_SELECTED,
     MODEL_SELECTED,
     ROUTE_PAGE_LOADED,
-    ROUTE_PAGE_UNLOADED
+    ROUTE_PAGE_UNLOADED,
+    ROUTE_RENDERED
 } from "../constants/actionTypes";
 
 export default (state={}, action) => {
@@ -27,6 +28,12 @@ export default (state={}, action) => {
             };
         case ROUTE_PAGE_UNLOADED:
             return {};
+        case ROUTE_RENDERED:
+            console.log(action.payload);
+            return {
+                ...state,
+                routeDetails: action.payload
+            };
         default:
             return state;
     }

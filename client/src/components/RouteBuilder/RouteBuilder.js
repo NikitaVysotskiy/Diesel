@@ -48,7 +48,6 @@ class RouteBuilder extends Component {
     };
 
     handleStationChange = (e, { value }) => {
-        console.log(value);
         this.setState({
             fuelsOptions: this.props.fuelPrices
                             .filter(f => f.station === value)[0]
@@ -58,13 +57,6 @@ class RouteBuilder extends Component {
                                 text: `${fuel.fuel_kind} (${fuel.price} UAH)`
                             }))
         })
-    };
-
-    onRouteInputUpdate = (e, { value }) => {
-        console.log(e, value);
-        // this.setState({
-        //
-        // })
     };
 
     componentWillMount() {
@@ -79,8 +71,8 @@ class RouteBuilder extends Component {
         this.props.onUnload();
     }
 
-    renderRoute = (origin, destination) => {
-        this.routeMap.renderRoute(origin, destination)
+    submitRoute = (origin, destination) => {
+       this.routeMap.getWrappedInstance().renderRoute(origin, destination);
     };
 
     render() {
@@ -133,12 +125,12 @@ class RouteBuilder extends Component {
                                 animation='overlay'
                                 width='wide'
                                 direction='left'
-                                visible={visible}
+                                visible={visible || !!this.props.routeDetails}
                                 icon='labeled'
                                 vertical
                                 inverted
                             >
-                                <RouteDetails />
+                                <RouteDetails routeDetails={this.props.routeDetails}/>
                             </Sidebar>
 
                             <Sidebar.Pusher>
@@ -152,9 +144,8 @@ class RouteBuilder extends Component {
                                            handleEngineChange={this.handleEngineChange}
                                            handleStationChange={this.handleStationChange}
                                            fuelConsumptions={fuelConsumptions}
-                                           onRouteInputUpdate={this.onRouteInputUpdate}
                                            google={this.props.google}
-                                           renderRoute={this.renderRoute}
+                                           submitRoute={this.submitRoute}
                                 />
 
 

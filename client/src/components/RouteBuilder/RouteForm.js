@@ -12,30 +12,46 @@ class RouteForm extends Component {
 
     getInputRef = type => node => {type === 'origin' ? this._originInput = node : this._routeInput = node};
 
-    buildRoute = () => {
+    submitRoute = () => {
         const { origin, destination } = this.state;
         if (origin && destination) {
-            this.props.renderRoute(origin, destination);
+            this.props.submitRoute(origin, destination);
         }
     };
 
     loadAutocomplete() {
         if (this.props.google) {
+            const { maps } = this.props.google;
             // TODO: handle multiple inputs
             const node1 = ReactDOM.findDOMNode(this._originInput.inputRef);
             const node2 = ReactDOM.findDOMNode(this._routeInput.inputRef);
 
-            const originAutocomplete = new this.props.google.maps.places.Autocomplete(node1);
+            const originAutocomplete = new maps.places.Autocomplete(node1);
             originAutocomplete.addListener('place_changed', () => {
                 const origin = originAutocomplete.getPlace();
                 this.setState({origin: origin});
             });
 
-            const destinationAutocomplete = new this.props.google.maps.places.Autocomplete(node2);
+            const destinationAutocomplete = new maps.places.Autocomplete(node2);
             destinationAutocomplete.addListener('place_changed', () => {
                 const destination = destinationAutocomplete.getPlace();
                 this.setState({destination: destination});
             });
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(position => {
+                    const geolocation = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+                    const circle = new maps.Circle({
+                        center: geolocation,
+                        radius: position.coords.accuracy
+                    });
+                    originAutocomplete.setBounds(circle.getBounds());
+                    destinationAutocomplete.setBounds(circle.getBounds());
+                });
+            }
         }
     }
 
@@ -119,7 +135,6 @@ class RouteForm extends Component {
                     <Form.Field>
                         <Input
                             fluid
-                            onChange={this.props.onRouteInputUpdate}
                             placeholder='To'
                             ref={this.getInputRef()}
                         />
@@ -150,7 +165,7 @@ class RouteForm extends Component {
                     </Form.Field>
                 </Form>
                 <Segment inverted>
-                    <Button primary onClick={this.buildRoute}>
+                    <Button primary onClick={this.submitRoute}>
                         Build a route
                     </Button>
                 </Segment>
