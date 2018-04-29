@@ -1,10 +1,11 @@
 import { connect } from "react-redux";
 import { GoogleApiWrapper } from 'google-maps-react'
-import { Grid } from "semantic-ui-react";
+import { Button, Grid, Segment, Sidebar } from "semantic-ui-react";
 import React, { Component } from 'react';
 
 import agent from "../../agent";
 import { MAKE_SELECTED, MODEL_SELECTED, ROUTE_PAGE_LOADED, ROUTE_PAGE_UNLOADED } from "../../constants/actionTypes";
+import RouteDetails from "./RouteDetails";
 import RouteForm from "./RouteForm";
 import RouteMap from "./RouteMap";
 
@@ -24,6 +25,8 @@ const mapDispatchToProps = dispatch => ({
 
 
 class RouteBuilder extends Component {
+    state = {visible: false};
+    toggleVisibility = () => this.setState({ visible: !this.state.visible });
 
     handleMakeChange = (e, { value }) => {
         this.setState({ make: value, fuelConsumptions: [] });
@@ -115,27 +118,50 @@ class RouteBuilder extends Component {
         }
         // -----
 
-        const { fuelConsumptions, fuelsOptions } = this.state || {};
+        const { fuelConsumptions, fuelsOptions, visible } = this.state || {};
 
         return (
             <Grid celled='internally'>
                 <Grid.Row>
 
                     <Grid.Column width={4}>
-                        <RouteForm makesOptions={makesOptions}
-                                   modelsOptions={modelsOptions}
-                                   enginesOptions={enginesOptions}
-                                   stationsOptions={stationsOptions}
-                                   fuelsOptions={fuelsOptions}
-                                   handleMakeChange={this.handleMakeChange}
-                                   handleModelChange={this.handleModelChange}
-                                   handleEngineChange={this.handleEngineChange}
-                                   handleStationChange={this.handleStationChange}
-                                   fuelConsumptions={fuelConsumptions}
-                                   onRouteInputUpdate={this.onRouteInputUpdate}
-                                   google={this.props.google}
-                                   renderRoute={this.renderRoute}
-                        />
+
+                        <Sidebar.Pushable>
+
+                            <Sidebar
+                                as={Segment}
+                                animation='overlay'
+                                width='wide'
+                                direction='left'
+                                visible={visible}
+                                icon='labeled'
+                                vertical
+                                inverted
+                            >
+                                <RouteDetails />
+                            </Sidebar>
+
+                            <Sidebar.Pusher>
+                                <RouteForm makesOptions={makesOptions}
+                                           modelsOptions={modelsOptions}
+                                           enginesOptions={enginesOptions}
+                                           stationsOptions={stationsOptions}
+                                           fuelsOptions={fuelsOptions}
+                                           handleMakeChange={this.handleMakeChange}
+                                           handleModelChange={this.handleModelChange}
+                                           handleEngineChange={this.handleEngineChange}
+                                           handleStationChange={this.handleStationChange}
+                                           fuelConsumptions={fuelConsumptions}
+                                           onRouteInputUpdate={this.onRouteInputUpdate}
+                                           google={this.props.google}
+                                           renderRoute={this.renderRoute}
+                                />
+
+
+                            </Sidebar.Pusher>
+                        </Sidebar.Pushable>
+                        <Button onClick={this.toggleVisibility}>Toggle Visibility</Button>
+
                     </Grid.Column>
 
                     <Grid.Column width={10}>
