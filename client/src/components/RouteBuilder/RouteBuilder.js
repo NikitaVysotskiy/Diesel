@@ -53,7 +53,7 @@ class RouteBuilder extends Component {
                             .filter(f => f.station === value)[0]
                             .fuels.map((fuel, i) => ({
                                 key: i,
-                                value: fuel.fuel_kind,
+                                value: fuel.price,
                                 text: `${fuel.fuel_kind} (${fuel.price} UAH)`
                             }))
         })
@@ -71,8 +71,10 @@ class RouteBuilder extends Component {
         this.props.onUnload();
     }
 
-    submitRoute = (origin, destination) => {
-       this.routeMap.getWrappedInstance().renderRoute(origin, destination);
+    submitRoute = (origin, destination, fuelPrice) => {
+        const { fuelConsumptions } = this.state;
+
+        this.routeMap.getWrappedInstance().renderRoute(origin, destination, fuelPrice, fuelConsumptions);
     };
 
     render() {

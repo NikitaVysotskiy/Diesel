@@ -17,7 +17,7 @@ class RouteMap extends Component {
         }
     }
 
-    renderRoute(origin, destination, fuelConsumption=0, fuelPrice=0) {
+    renderRoute(origin, destination, fuelPrice=0, fuelConsumptions=0) {
         const request = {
             origin: origin.geometry.location,
             destination: destination.geometry.location,
@@ -31,8 +31,8 @@ class RouteMap extends Component {
                 this.directionsDisplay.setDirections(res);
                 this.props.onRouteRender({
                     directionsRes: res,
-                    fuelConsumption,
-                    fuelPrice
+                    fuelPrice,
+                    fuelConsumptions,
                 })
 
             } else {
@@ -50,8 +50,8 @@ class RouteMap extends Component {
             const node = ReactDOM.findDOMNode(mapRef);
 
             const mapConfig = Object.assign({}, {
-                center: {lat: 0, lng: 180},
-                zoom: 2,
+                center: {lat: 50.45, lng: 30.52},
+                zoom: 6,
                 gestureHandling: "cooperative",
                 mapTypeId: 'terrain'
             });

@@ -12,10 +12,14 @@ class RouteForm extends Component {
 
     getInputRef = type => node => {type === 'origin' ? this._originInput = node : this._routeInput = node};
 
+    setFuelPrice = (e, { value }) => {
+        this.setState({ selectedFuelPrice: value })
+    };
+
     submitRoute = () => {
-        const { origin, destination } = this.state;
-        if (origin && destination) {
-            this.props.submitRoute(origin, destination);
+        const { origin, destination, selectedFuelPrice } = this.state;
+        if (origin && destination && selectedFuelPrice) {
+            this.props.submitRoute(origin, destination, selectedFuelPrice);
         }
     };
 
@@ -158,6 +162,7 @@ class RouteForm extends Component {
                     <Form.Field>
                         <Form.Select
                             fluid
+                            onChange={this.setFuelPrice}
                             options={this.props.fuelsOptions || []}
                             selection
                             placeholder='Fuel'
