@@ -26,7 +26,16 @@ const mapDispatchToProps = dispatch => ({
 
 class RouteBuilder extends Component {
     state = {visible: false};
-    toggleVisibility = () => this.setState({ visible: !this.state.visible });
+    toggleVisibility = () => {
+
+        // this.setState({ visible: !this.state.visible })
+         this.routeMap.getWrappedInstance().renderRoute(
+             {lat: 50.45, lng: 30.52},
+             {lat: 49.84, lng: 24.03},
+             32.5,
+             ["5.6",]
+         );
+    };
 
     handleMakeChange = (e, { value }) => {
         this.setState({ make: value, fuelConsumptions: [] });
