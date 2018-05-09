@@ -25,7 +25,7 @@ const mapDispatchToProps = dispatch => ({
 
 
 class RouteBuilder extends Component {
-    state = {visible: false};
+    state = {visible: true};
     toggleVisibility = () => {
 
         // this.setState({ visible: !this.state.visible })
@@ -33,7 +33,7 @@ class RouteBuilder extends Component {
              {lat: 50.45, lng: 30.52},
              {lat: 49.84, lng: 24.03},
              32.5,
-             ["5.6",]
+             ["5.6", "6.1"]
          );
     };
 
@@ -140,6 +140,7 @@ class RouteBuilder extends Component {
                                 icon='labeled'
                                 vertical
                                 inverted
+                                style={{'width': '100%'}}
                             >
                                 <RouteDetails routeDetails={this.props.routeDetails}/>
                             </Sidebar>
