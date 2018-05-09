@@ -78,6 +78,11 @@ class RouteDetails extends Component {
                     <Statistic.Value>{totalPrice} UAH</Statistic.Value>
                     <Statistic.Label>Price</Statistic.Label>
                 </Statistic>
+                <Segment inverted>
+                    <div ref={node => {this.props.setPanel(node)}}>
+
+                    </div>
+                </Segment>
             </Segment>
         )
     }

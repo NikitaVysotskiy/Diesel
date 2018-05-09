@@ -61,7 +61,9 @@ class RouteMap extends Component {
 
             this.directionsService = new maps.DirectionsService();
             this.directionsDisplay = new maps.DirectionsRenderer();
+
             this.directionsDisplay.setMap(this.map);
+            this.directionsDisplay.setPanel(this.props.panel)
         }
     }
 

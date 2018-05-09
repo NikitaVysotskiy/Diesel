@@ -142,7 +142,9 @@ class RouteBuilder extends Component {
                                 inverted
                                 style={{'width': '100%'}}
                             >
-                                <RouteDetails routeDetails={this.props.routeDetails}/>
+                                <RouteDetails routeDetails={this.props.routeDetails}
+                                              setPanel={node => {this.routePanel = node}}
+                                />
                             </Sidebar>
 
                             <Sidebar.Pusher>
@@ -168,7 +170,10 @@ class RouteBuilder extends Component {
                     </Grid.Column>
 
                     <Grid.Column width={10}>
-                        <RouteMap ref={node => {this.routeMap = node}} google={this.props.google}/>
+                        <RouteMap ref={node => {this.routeMap = node}}
+                                  panel={this.routePanel}
+                                  google={this.props.google}
+                        />
                     </Grid.Column>
 
                 </Grid.Row>
