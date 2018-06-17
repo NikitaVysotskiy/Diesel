@@ -36,6 +36,7 @@ class App extends Component {
             agent.setToken(token);
             // TODO: redirect on '/'
             store.dispatch(push('/route-builder'));
+            // store.dispatch(push('/event-recorder'));
             this.props.onRedirect();
         } else {
             store.dispatch(push('/login'));

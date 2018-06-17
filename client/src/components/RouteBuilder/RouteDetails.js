@@ -51,7 +51,7 @@ class RouteDetails extends Component {
 
         // TODO: back button
         return (
-            <Segment inverted size='tiny'>
+            <Segment inverted size='tiny' textAlign="center">
                 <Dropdown placeholder='Select Route'
                           fluid
                           selection
@@ -78,11 +78,9 @@ class RouteDetails extends Component {
                     <Statistic.Value>{totalPrice} UAH</Statistic.Value>
                     <Statistic.Label>Price</Statistic.Label>
                 </Statistic>
-                <Segment inverted>
-                    <div ref={node => {this.props.setPanel(node)}}>
+                    <div id="routeDetails" ref={node => {this.props.setPanel(node)}}>
 
                     </div>
-                </Segment>
             </Segment>
         )
     }

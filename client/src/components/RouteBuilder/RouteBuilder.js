@@ -25,7 +25,7 @@ const mapDispatchToProps = dispatch => ({
 
 
 class RouteBuilder extends Component {
-    state = {visible: true};
+    state = {visible: false};
     toggleVisibility = () => {
 
         // this.setState({ visible: !this.state.visible })
@@ -127,7 +127,7 @@ class RouteBuilder extends Component {
             <Grid celled='internally'>
                 <Grid.Row>
 
-                    <Grid.Column width={4}>
+                    <Grid.Column width={5}>
 
                         <Sidebar.Pushable>
 
@@ -169,7 +169,7 @@ class RouteBuilder extends Component {
 
                     </Grid.Column>
 
-                    <Grid.Column width={10}>
+                    <Grid.Column width={9}>
                         <RouteMap ref={node => {this.routeMap = node}}
                                   panel={this.routePanel}
                                   google={this.props.google}

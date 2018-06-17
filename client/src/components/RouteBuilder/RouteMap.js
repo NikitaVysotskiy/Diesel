@@ -20,9 +20,9 @@ class RouteMap extends Component {
     renderRoute(origin, destination, fuelPrice=0, fuelConsumptions=0) {
         console.log(origin, destination);
         const request = {
-            origin, destination,
-            // origin: origin.geometry.location,
-            // destination: destination.geometry.location,
+            // origin, destination,
+            origin: origin.geometry.location,
+            destination: destination.geometry.location,
             travelMode: 'DRIVING',
             provideRouteAlternatives: true
         };

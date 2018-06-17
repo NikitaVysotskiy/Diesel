@@ -19,7 +19,15 @@ class HeaderMenu extends  Component {
 
     state = { activeItem: 'routeCalculator' };
 
-    handleItemClick = (e, { name }) => this.setState({ activeItem: name });
+    handleItemClick = (e, { name }) => {
+        this.setState({ activeItem: name });
+        console.log(name);
+        if (name === 'routeCalculator'){
+            store.dispatch(push('/route-builder'))
+        } else {
+            store.dispatch(push('/event-recorder'))
+        }
+    };
 
     logout (onLogoutClick) {
         onLogoutClick();
